@@ -1,6 +1,7 @@
 <template>
 <div>
     <Header></Header>
+    <ShopCart></ShopCart>
     <div class='container'>
         <div class='highlight-window' id='product-img' :style="'background-image: url('+product.image+'); padding: 20px;'">
             <div class='highlight-overlay' id='highlight-overlay'></div>
@@ -18,7 +19,7 @@
 
                 <div class='purchase-info'>
                     <div class='price'>{{product.price}}$</div>
-                    <button>ADD TO CART</button>
+                    <button @click="addProductToCart">ADD TO CART</button>
                 </div>
             </div>
         </div>
@@ -28,10 +29,11 @@
 
 <script>
 import Header from "./Header.vue"
-
+import ShopCart from "./ShopCart.vue"
 export default {
     components: {
-      Header
+      Header,
+      ShopCart
     },
     props: ['productId'],
     data() {
@@ -41,18 +43,26 @@ export default {
             title: "",
             description: "",
             image: "",
-          }
+          },
+          storage: window.localStorage,
+          cart: []
         };
     },
     methods: {
+      addProductToCart() {
+        this.cart.push(this.product);
+        this.storage.setItem("cart",JSON.stringify(this.cart));
+        location.reload();
+      },
     },
     created() {
       fetch('https://fakestoreapi.com/products/'+this.$props.productId)
-            .then(res=>res.json())
-            .then(json=>{
-              console.log(json)
-              this.product = json;  
-            })
+        .then(res=>res.json())
+        .then(json=>{
+          this.product = json;  
+        });
+        const items = JSON.parse(this.storage.getItem("cart"))
+        this.cart = items ? items : [];
     },
 }
 </script>

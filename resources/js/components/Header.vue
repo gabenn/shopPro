@@ -1,4 +1,5 @@
 <template>
+<header>
   <a id="arrowAnim" href="/">
     <div class="arrowSliding">
       <div class="arrow"></div>
@@ -11,13 +12,17 @@
     </div>
     <div class="arrowSliding delay3">
       <div class="arrow"></div>
-    </div>
+    </div> 
   </a>
+</header>
 </template>
 
 <script>
+import ShopCart from "./ShopCart.vue";
+
 export default {
     components: {
+      ShopCart
     },
     props: [],
     data() {

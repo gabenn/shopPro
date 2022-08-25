@@ -1,6 +1,7 @@
 <template>
   <div>
     <Header></Header>
+    <ShopCart></ShopCart>
     <div class="shop-section">
       <div  class="product-container">
         <div v-for="product in products">
@@ -18,10 +19,12 @@
 <script>
 import ItemComponent from './ItemComponent.vue';
 import Header from './Header.vue';
+import ShopCart from './ShopCart.vue';
 export default {
     components: {
       Header,
-      ItemComponent
+      ItemComponent,
+      ShopCart
     },
     props: ['category'],
     data() {
